@@ -25,8 +25,17 @@ todo_3_id = uuid.uuid4()
 todo_4_id = uuid.uuid4()
 
 # define internal data structures with example data
-todo_lists = []
-todos = []
+todo_lists = [
+    {'id': todo_list_1_id, 'name': 'Einkaufsliste'},
+    {'id': todo_list_2_id, 'name': 'Arbeitsliste'},
+    {'id': todo_list_3_id, 'name': 'Wunschliste'}
+]
+todos = [
+    {'id': todo_1_id, 'name': 'Milch', 'description': 'Meine Einkäufe für diese Woche', 'list': todo_list_1_id},
+    {'id': todo_2_id, 'name': 'Computer', 'description': 'Computer kaufen', 'list': todo_list_2_id},
+    {'id': todo_3_id, 'name': 'Geschenk', 'description': 'PS5 Controller', 'list': todo_list_3_id},
+    {'id': todo_4_id, 'name': 'Eier', 'description': 'Meine Einkäufe für diese Woche', 'list': todo_list_1_id}
+]
 
 # add some headers to allow cross origin access to the API on this server, necessary for using preview in Swagger Editor!
 @app.after_request
