@@ -63,6 +63,11 @@ def handle_list(list_id):
                 break
         if not found:
                 return jsonify({"message": "Invalid list ID"}), 404
+        entries = []
+        for todo in todos:
+            if todo['list_id'] == list_id:
+                entries.append(todo)
+        return jsonify(entries)
     elif request.method == 'DELETE':
         pass
     elif request.method == 'POST':
