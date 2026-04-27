@@ -55,7 +55,18 @@ def add_new_list():
 # and adding a new entry to an existing list (POST)
 @app.route('/todo-list/<list_id>', methods=['GET', 'DELETE', 'POST'])
 def handle_list(list_id):
-    pass
+    if request.method == 'GET':
+        found = False
+        for current_list in todo_lists:
+            if current_list['id'] == list_id:
+                found = True
+                break;
+            if not found:
+                return jsonify({"message": "Invalid list ID"}), 404
+    elif request.method == 'DELETE':
+        pass
+    elif request.method == 'POST':
+        pass
 
 # endpoint for updating an existing entry (PATCH)
 # and deleting a single entry (DELETE)
