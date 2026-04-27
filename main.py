@@ -60,8 +60,8 @@ def handle_list(list_id):
         for current_list in todo_lists:
             if current_list['id'] == list_id:
                 found = True
-                break;
-            if not found:
+                break
+        if not found:
                 return jsonify({"message": "Invalid list ID"}), 404
     elif request.method == 'DELETE':
         pass
