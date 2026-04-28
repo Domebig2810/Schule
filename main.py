@@ -9,7 +9,7 @@ Requirements:
 
 import uuid
 
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify
 
 
 # initialize Flask server
@@ -19,10 +19,10 @@ app = Flask(__name__)
 todo_list_1_id = '1318d3d1-d979-47e1-a225-dab1751dbe75'
 todo_list_2_id = '3062dc25-6b80-4315-bb1d-a7c86b014c65'
 todo_list_3_id = '44b02e00-03bc-451d-8d01-0c67ea866fee'
-todo_1_id = uuid.uuid4()
-todo_2_id = uuid.uuid4()
-todo_3_id = uuid.uuid4()
-todo_4_id = uuid.uuid4()
+todo_1_id = str(uuid.uuid4())
+todo_2_id = str(uuid.uuid4())
+todo_3_id = str(uuid.uuid4())
+todo_4_id = str(uuid.uuid4())
 
 # define internal data structures with example data
 todo_lists = [
@@ -135,7 +135,47 @@ def handle_list(list_id):
 # and deleting a single entry (DELETE)
 @app.route('/entry/<entry_id>', methods=['PATCH', 'DELETE'])
 def handle_entry(entry_id):
-    pass
+    if request.method == 'PATCH':
+        found = False
+        entry_to_update = None
+        for entry in todos:
+            if entry['id'] == entry_id:
+                found = True
+                entry_to_update = entry
+                break
+        if not found:
+            return jsonify({"message": "Invalid entry ID"}), 404
+
+        try:
+            data = request.json
+            if not data:
+                return jsonify({"message": "Invalid request data"}), 406
+
+            if 'name' in data:
+                entry_to_update['name'] = data['name']
+            if 'description' in data:
+                entry_to_update['description'] = data['description']
+
+            return jsonify(entry_to_update), 200
+        except Exception:
+            return jsonify({"message": "Server error"}), 500
+
+    elif request.method == 'DELETE':
+        found = False
+        entry_to_delete = None
+        for entry in todos:
+            if entry['id'] == entry_id:
+                found = True
+                entry_to_delete = entry
+                break
+        if not found:
+            return jsonify({"message": "Invalid entry ID"}), 404
+
+        try:
+            todos.remove(entry_to_delete)
+            return jsonify({"message": "Entry deleted"}), 204
+        except Exception:
+            return jsonify({"message": "Server error"}), 500
 
 if __name__ == '__main__':
     # start Flask server
