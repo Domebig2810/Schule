@@ -107,7 +107,29 @@ def handle_list(list_id):
             return jsonify({"message": "Server error"}), 500
 
     elif request.method == 'POST':
-        pass
+        found = False
+        for current_list in todo_lists:
+            if current_list['id'] == list_id:
+                found = True
+                break
+        if not found:
+            return jsonify({"message": "Invalid list ID"}), 404
+
+        try:
+            data = request.json
+            if not data or 'name' not in data:
+                return jsonify({"message": "Invalid request data"}), 406
+
+            new_entry = {
+                'id': str(uuid.uuid4()),
+                'name': data['name'],
+                'description': data.get('description', ''),
+                'list_id': list_id
+            }
+            todos.append(new_entry)
+            return jsonify(new_entry), 201
+        except Exception:
+            return jsonify({"message": "Server error"}), 500
 
 # endpoint for updating an existing entry (PATCH)
 # and deleting a single entry (DELETE)
