@@ -48,7 +48,19 @@ def apply_cors_header(response):
 # endpoint for creating a new todo list
 @app.route('/todo-list', methods=['POST'])
 def add_new_list():
-    pass
+    try:
+        data = request.json
+        if not data or 'name' not in data:
+            return jsonify({"message": "Invalid request"}), 406
+        new_list = {
+            'id': str(uuid.uuid4()),
+            'name': data['name']
+        }
+        todo_lists.append(new_list)
+        return jsonify(new_list), 201
+    except Exception:
+        return jsonify({"message": "Server error"}), 500
+
 
 # endpoint for getting all entries of a list (GET),
 # deleting a complete list with all its entries (DELETE)
@@ -63,6 +75,7 @@ def handle_list(list_id):
                 break
         if not found:
             return jsonify({"message": "Invalid list ID"}), 404
+
         try:
             entries = []
             for todo in todos:
@@ -71,6 +84,7 @@ def handle_list(list_id):
             return jsonify(entries), 200
         except Exception:
             return jsonify({"message": "Server error"}), 500
+
     elif request.method == 'DELETE':
         found = False
         for current_list in todo_lists:
