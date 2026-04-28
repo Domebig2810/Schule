@@ -62,14 +62,36 @@ def handle_list(list_id):
                 found = True
                 break
         if not found:
-                return jsonify({"message": "Invalid list ID"}), 404
-        entries = []
-        for todo in todos:
-            if todo['list_id'] == list_id:
-                entries.append(todo)
-        return jsonify(entries)
+            return jsonify({"message": "Invalid list ID"}), 404
+        try:
+            entries = []
+            for todo in todos:
+                if todo['list_id'] == list_id:
+                    entries.append(todo)
+            return jsonify(entries), 200
+        except Exception:
+            return jsonify({"message": "Server error"}), 500
     elif request.method == 'DELETE':
-        pass
+        found = False
+        for current_list in todo_lists:
+            if current_list['id'] == list_id:
+                found = True
+                list_to_delete = current_list
+                break
+        if not found:
+            return jsonify({"message": "Invalid list ID"}), 404
+
+        try:
+            todo_lists.remove(list_to_delete)
+            keep_list = []
+            for entry in todos:
+                if entry['list_id'] != list_id:
+                    keep_list.append(entry)
+            todos[:] = keep_list
+            return jsonify({"message": "List deleted"}), 204
+        except Exception:
+            return jsonify({"message": "Server error"}), 500
+
     elif request.method == 'POST':
         pass
 
