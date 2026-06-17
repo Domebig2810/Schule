@@ -1,6 +1,6 @@
 # Server Setup
 
-Diese Dokumentation beschreibt die vollständige Einrichtung des Servers – von der ersten SSH-Verbindung bis zur laufenden App.  
+Diese Dokumentation von Elias und Dominick beschreibt die vollständige Einrichtung des Servers – von der ersten SSH-Verbindung bis zur laufenden App.  
 Sie richtet sich auch an Personen ohne Linux-Vorkenntnisse und funktioniert auf einem frischen Raspberry Pi OS.
 
 ---
