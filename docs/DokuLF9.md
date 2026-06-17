@@ -178,7 +178,7 @@ sudo useradd -m -s /bin/bash willi
 > `-s /bin/bash` setzt die Standard-Shell auf Bash.  
 > `sudo` führt den Befehl mit Administratorrechten aus.
 
-Neues Passowrt für Willi anlegen:
+Neues Passwort für Willi anlegen:
 ```bash
 sudo passwd willi
 # Passwort eingeben: willispasswd
@@ -284,14 +284,14 @@ cd /opt
 > `/opt` ist unter Linux der übliche Speicherort für manuell installierte Anwendungen.
 
 ```bash
-sudo git clone https://github.com/SomeRandoLameo/TodoList.git
+sudo git clone https://github.com/Domebig2810/Schule.git TodoList
 ```
 
 > `git clone` lädt eine vollständige Kopie des Projekts von GitHub herunter.  
 > Es wird automatisch ein neuer Ordner `TodoList` erstellt.
 
 ```bash
-cd TodoList
+cd TodoList/todo-api
 ```
 
 > Wechselt in den soeben erstellten Projektordner.
@@ -311,7 +311,7 @@ sudo docker-compose up -d
 Die App ist danach erreichbar unter:
 
 ```
-http://192.168.24.110:5001
+http://192.168.24.110:5000
 ```
 
 ---
@@ -329,7 +329,7 @@ http://192.168.24.110:5001
 | SSH Root-Login aktivieren    | `sed`, `systemctl restart sshd`     |
 | Docker installieren          | `apt install docker.io`             |
 | Docker Compose installieren  | `apt-get install docker-compose`    |
-| App deployen                 | `git clone`, `docker-compose up -d` |
+| App deployen                 | `git clone https://github.com/Domebig2810/Schule.git TodoList`, `cd TodoList/todo-api`, `docker-compose up -d` |
 
 ---
 
