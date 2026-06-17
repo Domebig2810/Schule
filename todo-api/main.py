@@ -45,6 +45,11 @@ def apply_cors_header(response):
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
     return response
 
+# Startseite – gibt alle Listen zurück
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify(todo_lists), 200
+
 # endpoint for creating a new todo list
 @app.route('/todo-list', methods=['POST'])
 def add_new_list():
